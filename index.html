@@ -1,1 +1,472 @@
+<!DOCTYPE html>
+<html lang="hi">
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>CJP Vote — Cockroach Janta Party</title>
+
+  <!-- Social share meta tags -->
+  <meta name="description" content="Desh ki janta bol rahi hai. Apna vote do. Results 15 August 2026." />
+  <meta property="og:title" content="🪳 CJP Vote — Desh Ki Awaaz" />
+  <meta property="og:description" content="2,48,293 log pehle se vote de chuke hain." />
+  <meta name="theme-color" content="#0f2347" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Sans:wght@400;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+  <!-- ========================================
+       REEL PLAYER — Main container
+       Poora app iske andar hai
+       ======================================== -->
+  <div id="reelPlayer">
+
+    <!-- Progress bar — video jaisa upar -->
+    <div id="progressBar">
+      <div id="progressFill"></div>
+    </div>
+
+    <!-- Top bar — logo aur mute button -->
+    <div id="topBar">
+      <div id="topLogo">
+        <span id="logoEmoji">🪳</span>
+        <span id="logoText">CJP Vote</span>
+      </div>
+      <button id="btnMute" aria-label="Mute/Unmute">🔊</button>
+    </div>
+
+    <!-- ========================================
+         SCENES CONTAINER
+         Sirf ek scene active hogi baki hidden
+         ======================================== -->
+    <div id="scenesContainer">
+
+      <!-- ======================================
+           SCENE 1 — Permission
+           "Desh ke liye kuch karna chahte ho?"
+           Trick: click = audio permission
+           ====================================== -->
+      <div class="scene" id="scene-permission">
+        <div class="scene-content scene-content--center">
+          <div class="permission-flag">🇮🇳</div>
+          <h1 class="permission-title">Kya aap desh ke liye<br/>kuch karna chahte hain?</h1>
+          <p class="permission-subtitle">"Sirf ek click — aur aapki awaaz<br/>record ho jaayegi"</p>
+          <button class="btn-primary" id="btnPermission">
+            Haan, Main Tayaar Hun! 🪳
+          </button>
+          <p class="permission-disclaimer">*Audio anubhav ke liye allow karein</p>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 2 — Intro / Splash
+           CJP ka dramatic introduction
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-intro">
+        <div class="scene-content scene-content--center">
+          <div class="intro-emoji">🪳</div>
+          <h1 class="intro-title">Cockroach<br/>Janta Party</h1>
+          <p class="intro-hindi">कॉकरोच जनता पार्टी</p>
+          <div class="intro-divider"></div>
+          <p class="intro-tagline">"Surviving Since Democracy"</p>
+          <p class="intro-year">Est. 16 May 2026</p>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 3 — State Select
+           Mandatory — vote ke liye zaroori
+           Rukta hai — user input chahiye
+           ====================================== -->
+      <div class="scene" id="scene-state">
+        <div class="scene-content">
+          <h2 class="scene-title">Apna State Chuniye</h2>
+          <p class="scene-subtitle">"Pehle state batao, phir vote do —<br/>neta se zyada transparent hain hum"</p>
+
+          <!-- State dropdown -->
+          <select id="stateSelect" class="state-select">
+            <option value="">— State chuniye —</option>
+            <option value="AP">Andhra Pradesh</option>
+            <option value="AR">Arunachal Pradesh</option>
+            <option value="AS">Assam</option>
+            <option value="BR">Bihar 🪳</option>
+            <option value="CG">Chhattisgarh</option>
+            <option value="DL">Delhi</option>
+            <option value="GA">Goa</option>
+            <option value="GJ">Gujarat</option>
+            <option value="HR">Haryana</option>
+            <option value="HP">Himachal Pradesh</option>
+            <option value="JH">Jharkhand</option>
+            <option value="KA">Karnataka</option>
+            <option value="KL">Kerala</option>
+            <option value="MP">Madhya Pradesh</option>
+            <option value="MH">Maharashtra</option>
+            <option value="MN">Manipur</option>
+            <option value="ML">Meghalaya</option>
+            <option value="MZ">Mizoram</option>
+            <option value="NL">Nagaland</option>
+            <option value="OD">Odisha</option>
+            <option value="PB">Punjab</option>
+            <option value="RJ">Rajasthan</option>
+            <option value="SK">Sikkim</option>
+            <option value="TN">Tamil Nadu</option>
+            <option value="TG">Telangana</option>
+            <option value="TR">Tripura</option>
+            <option value="UP">Uttar Pradesh</option>
+            <option value="UK">Uttarakhand</option>
+            <option value="WB">West Bengal</option>
+            <option value="JK">Jammu & Kashmir</option>
+            <option value="LA">Ladakh</option>
+            <option value="AN">Andaman & Nicobar</option>
+            <option value="CH">Chandigarh</option>
+            <option value="DN">Dadra & Nagar Haveli</option>
+            <option value="DD">Daman & Diu</option>
+            <option value="LD">Lakshadweep</option>
+            <option value="PY">Puducherry</option>
+          </select>
+
+          <!-- Proceed button — disabled till state selected -->
+          <button class="btn-primary" id="btnStateNext" disabled>
+            Aage Badho 🪳
+          </button>
+
+          <!-- Live vote count — social proof -->
+          <div class="state-live-count">
+            <span class="live-dot"></span>
+            <span id="liveCountText">2,48,293 log pehle se vote de chuke hain</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 4 — BYP Manifesto
+           Bharwa Janta Party
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-bjp">
+        <div class="scene-content">
+          <div class="manifesto-party-header">
+            <span class="manifesto-emoji">🐂</span>
+            <div>
+              <h2 class="manifesto-party-name">Bharwa Janta Party</h2>
+              <p class="manifesto-slogan">"Achhe Din aa rahe hain..."</p>
+            </div>
+          </div>
+          <!-- Points — JS se content.js se fill honge -->
+          <div class="manifesto-points" id="points-bjp"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 5 — Khangress Manifesto
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-khang">
+        <div class="scene-content">
+          <div class="manifesto-party-header">
+            <span class="manifesto-emoji">👴</span>
+            <div>
+              <h2 class="manifesto-party-name">Khangress</h2>
+              <p class="manifesto-slogan">"Hum the, hain, rahenge..."</p>
+            </div>
+          </div>
+          <div class="manifesto-points" id="points-khang"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 6 — KAP Manifesto
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-aap">
+        <div class="scene-content">
+          <div class="manifesto-party-header">
+            <span class="manifesto-emoji">🧹</span>
+            <div>
+              <h2 class="manifesto-party-name">Khaas Admi Party</h2>
+              <p class="manifesto-slogan">"Aam aadmi ki party..."</p>
+            </div>
+          </div>
+          <div class="manifesto-points" id="points-aap"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 7 — LFP Manifesto
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-lfp">
+        <div class="scene-content">
+          <div class="manifesto-party-header">
+            <span class="manifesto-emoji">🎪</span>
+            <div>
+              <h2 class="manifesto-party-name">Lokal Faaltu Party</h2>
+              <p class="manifesto-slogan">"Hamara neta best hai..."</p>
+            </div>
+          </div>
+          <div class="manifesto-points" id="points-lfp"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 8 — CJP Manifesto
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-cjp">
+        <div class="scene-content">
+          <div class="manifesto-party-header">
+            <span class="manifesto-emoji">🪳</span>
+            <div>
+              <h2 class="manifesto-party-name">Cockroach Janta Party</h2>
+              <p class="manifesto-slogan">"Surviving Since Democracy"</p>
+            </div>
+          </div>
+          <div class="manifesto-points" id="points-cjp"></div>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 9 — EVM Voting Machine
+           Exactly real EVM jaisa
+           Rukta hai — user vote kare
+           ====================================== -->
+      <div class="scene" id="scene-evm">
+        <div class="scene-content">
+
+          <!-- EVM machine — sharp corners, beige color -->
+          <div class="evm-machine">
+
+            <div class="evm-header">
+              <p class="evm-header-text">ELECTION COMMISSION OF COCKROACH INDIA</p>
+              <p class="evm-header-sub">BALLOT UNIT — SATIRICAL DIVISION</p>
+            </div>
+
+            <!-- Party buttons — exactly EVM style -->
+            <div class="evm-ballot">
+
+              <div class="evm-party-row" id="evm-bjp">
+                <span class="evm-party-num">1</span>
+                <span class="evm-party-emoji">🐂</span>
+                <span class="evm-party-name">Bharwa Janta Party</span>
+                <button class="evm-btn" data-party="bjp" aria-label="Vote for BYP">●</button>
+              </div>
+
+              <div class="evm-party-row" id="evm-khang">
+                <span class="evm-party-num">2</span>
+                <span class="evm-party-emoji">👴</span>
+                <span class="evm-party-name">Khangress</span>
+                <button class="evm-btn" data-party="khang" aria-label="Vote for Khangress">●</button>
+              </div>
+
+              <div class="evm-party-row" id="evm-aap">
+                <span class="evm-party-num">3</span>
+                <span class="evm-party-emoji">🧹</span>
+                <span class="evm-party-name">Khaas Admi Party</span>
+                <button class="evm-btn" data-party="aap" aria-label="Vote for KAP">●</button>
+              </div>
+
+              <div class="evm-party-row" id="evm-lfp">
+                <span class="evm-party-num">4</span>
+                <span class="evm-party-emoji">🎪</span>
+                <span class="evm-party-name">Lokal Faaltu Party</span>
+                <button class="evm-btn" data-party="lfp" aria-label="Vote for LFP">●</button>
+              </div>
+
+              <div class="evm-party-row" id="evm-cjp">
+                <span class="evm-party-num">5</span>
+                <span class="evm-party-emoji">🪳</span>
+                <span class="evm-party-name">Cockroach Janta Party</span>
+                <button class="evm-btn" data-party="cjp" aria-label="Vote for CJP">●</button>
+              </div>
+
+            </div>
+
+            <!-- Selected party — shows after button press -->
+            <div class="evm-selected" id="evmSelected">
+              <p id="evmSelectedText">Koi party select nahi ki</p>
+            </div>
+
+          </div>
+
+          <!-- Confirm vote button -->
+          <button class="btn-primary" id="btnVoteConfirm" disabled>
+            Vote Karo 🗳️
+          </button>
+
+          <p class="evm-disclaimer">"EVM mein koi cockroach nahi hai — hum khud hain"</p>
+
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 10 — Vote Confirmed
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-confirmed">
+        <div class="scene-content scene-content--center">
+          <div class="confirmed-emoji">✅</div>
+          <h2 class="confirmed-title">Badhaai Ho!</h2>
+          <p class="confirmed-text">"Aapka vote void mein<br/>safely deliver ho gaya"</p>
+          <div class="confirmed-detail">
+            <p id="confirmedParty"></p>
+            <p id="confirmedState"></p>
+            <p id="confirmedDate"></p>
+          </div>
+          <!-- Share card -->
+          <button class="btn-secondary" id="btnShare">
+            📱 Share Karo WhatsApp Pe
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 11 — Bhadaas Forum
+           Rukta hai — user likhta hai
+           ====================================== -->
+      <div class="scene" id="scene-bhadaas">
+        <div class="scene-content">
+          <h2 class="scene-title">Dil Ka Bhadaas Nikaalo 🗣️</h2>
+          <p class="scene-subtitle">"Yahan koi nahi sunta —<br/>isliye sab suntey hain"</p>
+
+          <!-- Write bhadaas -->
+          <textarea
+            id="bhadaasInput"
+            class="bhadaas-input"
+            placeholder="Apni zindagi ka frustration likho... ya sirf ? likh do"
+            maxlength="280">
+          </textarea>
+
+          <div class="bhadaas-meta">
+            <span id="bhadaasCount">280</span>
+            <span>characters baaki</span>
+          </div>
+
+          <button class="btn-primary" id="btnBhadaasPost">
+            Post Karo 🗣️
+          </button>
+
+          <button class="btn-ghost" id="btnBhadaasSkip">
+            Aaj mann nahi — skip
+          </button>
+
+          <!-- Today's top bhadaas -->
+          <div class="bhadaas-top">
+            <h3 class="bhadaas-top-title">👑 Aaj Ka Champion</h3>
+            <div id="bhadaasTopList"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 12 — Results
+           State wise counts
+           Party breakdown locked till Aug 15
+           ====================================== -->
+      <div class="scene" id="scene-results">
+        <div class="scene-content">
+          <h2 class="scene-title">Ab Tak Ki Ginti 📊</h2>
+          <p class="scene-subtitle">"Party breakdown 15 August ko —<br/>Azaadi ke din 🇮🇳"</p>
+
+          <!-- Countdown -->
+          <div class="countdown-box">
+            <span id="countdownDays">83</span>
+            <span class="countdown-label">din baaki hain</span>
+          </div>
+
+          <!-- State wise counts — JS se fill hoga -->
+          <div id="stateCountsList"></div>
+
+          <button class="btn-primary" id="btnGoToBhadaas">
+            Bhadaas Nikaalo 🗣️
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ======================================
+           SCENE 13 — Certificate
+           Shareable voting certificate
+           Auto advance — TTS length se
+           ====================================== -->
+      <div class="scene" id="scene-certificate">
+        <div class="scene-content scene-content--center">
+
+          <div class="certificate">
+            <div class="certificate-header">
+              <span class="certificate-flag">🇮🇳</span>
+              <h3 class="certificate-title">PRAMAN PATRA</h3>
+              <p class="certificate-subtitle">Certificate of Democratic Survival</p>
+            </div>
+            <div class="certificate-body">
+              <p class="certificate-text">Yeh praman-patra diya jaata hai</p>
+              <p class="certificate-name" id="certStateName"></p>
+              <p class="certificate-text">ki inhone apna democratic haq istemaal kiya</p>
+              <p class="certificate-party" id="certPartyName"></p>
+            </div>
+            <div class="certificate-footer">
+              <p id="certDate"></p>
+              <p>🪳 Cockroach Janta Party</p>
+              <p class="certificate-small">"Surviving Since Democracy"</p>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btnShareCert">
+            📱 Share Certificate
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- end scenesContainer -->
+
+    <!-- ========================================
+         BOTTOM BAR
+         Fake engagement — reel style
+         ======================================== -->
+    <div id="bottomBar">
+      <div class="bottom-likes">
+        <span class="bottom-heart">❤️</span>
+        <span id="bottomLikeCount">2,48,293</span>
+      </div>
+      <div class="bottom-share">
+        <button id="btnBottomShare" aria-label="Share">↗️ Share</button>
+      </div>
+    </div>
+
+    <!-- ========================================
+         AD SLOT
+         AdSense code yahan aayega
+         Between scenes show hoga
+         ======================================== -->
+    <div id="adSlot" class="ad-slot hidden">
+      <!-- AdSense code here -->
+      <p class="ad-label">ADVERTISEMENT</p>
+    </div>
+
+  </div>
+  <!-- end reelPlayer -->
+
+  <!-- ========================================
+       SCRIPTS — order important hai
+       1. content.js — data pehle load ho
+       2. firebase.js — DB ready ho
+       3. app.js — engine last mein
+       ======================================== -->
+  <script src="content.js"></script>
+  <script src="firebase.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
