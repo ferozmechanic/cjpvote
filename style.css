@@ -1,0 +1,1090 @@
+/* =============================================
+   CJP VOTE — style.css
+   "Surviving Since Democracy" 🪳
+   
+   Sections:
+   1. Variables & Reset
+   2. Base / Body
+   3. Reel Player Shell
+   4. Progress Bar
+   5. Top Bar
+   6. Bottom Bar
+   7. Scenes — base
+   8. Scene — Permission
+   9. Scene — Intro
+   10. Scene — State Select
+   11. Scene — Manifesto
+   12. Scene — EVM Machine
+   13. Scene — Vote Confirmed
+   14. Scene — Bhadaas
+   15. Scene — Results
+   16. Scene — Certificate
+   17. Buttons
+   18. Ad Slot
+   19. Animations
+   20. Utilities
+   ============================================= */
+
+
+/* =============================================
+   1. VARIABLES & RESET
+   ============================================= */
+
+:root {
+  /* --- Brand Colors --- */
+  --color-bg:         #0f2347; /* main dark background */
+  --color-blue:       #1B3A6B; /* header / card background */
+  --color-blue-light: #24508a; /* hover states */
+  --color-saffron:    #FF6B00; /* primary action / CTA */
+  --color-saffron-lt: #FF8C00; /* saffron hover */
+  --color-gold:       #C8A951; /* borders / accents */
+  --color-green:      #2D7A3A; /* success / confirm */
+  --color-white:      #FFFFFF;
+  --color-text:       rgba(255, 255, 255, 0.85);  /* body text */
+  --color-text-muted: rgba(255, 255, 255, 0.45);  /* secondary text */
+  --color-border:     rgba(200, 169, 81, 0.2);    /* card borders */
+
+  /* --- EVM specific colors --- */
+  --color-evm-bg:     #C8B89A; /* real EVM beige color */
+  --color-evm-dark:   #8B7355; /* EVM darker shade */
+  --color-evm-btn:    #2244AA; /* EVM blue button */
+  --color-evm-light:  #4466CC; /* EVM button glow */
+
+  /* --- Typography --- */
+  --font-hindi:   'Tiro Devanagari Hindi', serif; /* headings */
+  --font-body:    'Noto Sans', sans-serif;         /* body text */
+  --font-serif:   'Noto Serif', serif;             /* numbers / display */
+
+  /* --- Font Sizes --- */
+  --fs-xs:   12px;
+  --fs-sm:   14px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   22px;
+  --fs-xl:   28px;
+  --fs-xxl:  36px;
+
+  /* --- Spacing --- */
+  --space-xs:  6px;
+  --space-sm:  10px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+
+  /* --- Border Radius --- */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-full: 999px;
+  --radius-none: 0px; /* EVM ke liye */
+}
+
+/* Box sizing reset — sabhi elements pe */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default button styles */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+/* Remove default select styles */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =============================================
+   2. BASE / BODY
+   ============================================= */
+
+html {
+  font-size: var(--fs-base);
+  /* Prevent zoom on input focus on iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  /* Full height */
+  min-height: 100vh;
+  min-height: 100dvh; /* dynamic viewport for mobile */
+}
+
+
+/* =============================================
+   3. REEL PLAYER SHELL
+   Poora app iske andar hai
+   Full screen — bilkul video jaisa
+   ============================================= */
+
+#reelPlayer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh; /* mobile browser address bar ke saath sahi */
+  overflow: hidden;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =============================================
+   4. PROGRESS BAR
+   Video ke upar wali progress line
+   JS se width change hogi
+   ============================================= */
+
+#progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: 100;
+}
+
+#progressFill {
+  height: 100%;
+  width: 0%; /* JS se update hoga */
+  background: linear-gradient(90deg, var(--color-saffron), var(--color-gold));
+  transition: width 0.3s linear;
+}
+
+
+/* =============================================
+   5. TOP BAR
+   Logo aur mute button
+   ============================================= */
+
+#topBar {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 90;
+  /* Gradient taaki content ke upar readable ho */
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 35, 71, 0.8),
+    transparent
+  );
+}
+
+#topLogo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+#logoEmoji {
+  font-size: var(--fs-md);
+}
+
+#logoText {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-sm);
+  color: var(--color-gold);
+  letter-spacing: 1px;
+}
+
+#btnMute {
+  font-size: var(--fs-md);
+  color: var(--color-white);
+  opacity: 0.7;
+  padding: var(--space-xs);
+  /* Larger tap target for mobile */
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =============================================
+   6. BOTTOM BAR
+   Fake likes aur share — reel style
+   ============================================= */
+
+#bottomBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 90;
+  background: linear-gradient(
+    to top,
+    rgba(15, 35, 71, 0.9),
+    transparent
+  );
+}
+
+.bottom-likes {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-base);
+  color: var(--color-white);
+}
+
+.bottom-heart {
+  font-size: var(--fs-md);
+}
+
+#bottomLikeCount {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--color-saffron);
+}
+
+.bottom-share-btn {
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+}
+
+
+/* =============================================
+   7. SCENES — BASE STYLES
+   Sab scenes ka common style
+   Sirf active scene dikhai deti hai
+   ============================================= */
+
+/* Default — sab scenes hidden */
+.scene {
+  display: none;
+  position: absolute;
+  inset: 0; /* top right bottom left = 0 */
+  overflow-y: auto;
+  /* Scrollbar hide karo — clean look */
+  scrollbar-width: none;
+}
+
+.scene::-webkit-scrollbar {
+  display: none;
+}
+
+/* Active scene — JS se yeh class add hogi */
+.scene.scene--active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scene content wrapper — padding with safe areas */
+.scene-content {
+  flex: 1;
+  padding: 80px var(--space-md) 100px; /* top: topbar ke neeche, bottom: bottombar ke upar */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Centered content — permission, intro, confirmed ke liye */
+.scene-content--center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Common scene title */
+.scene-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+  line-height: 1.3;
+}
+
+/* Common scene subtitle */
+.scene-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+
+/* =============================================
+   8. SCENE — PERMISSION
+   Pehla screen — audio permission trick
+   ============================================= */
+
+.permission-flag {
+  font-size: 64px;
+  animation: flagWave 2s ease-in-out infinite;
+}
+
+.permission-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-xl);
+  color: var(--color-white);
+  line-height: 1.4;
+}
+
+.permission-subtitle {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.permission-disclaimer {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-sm);
+}
+
+
+/* =============================================
+   9. SCENE — INTRO
+   CJP ka dramatic introduction
+   ============================================= */
+
+.intro-emoji {
+  font-size: 80px;
+  animation: cockroachWiggle 2s ease-in-out infinite;
+}
+
+.intro-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-xxl);
+  color: var(--color-white);
+  line-height: 1.2;
+}
+
+.intro-hindi {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+}
+
+.intro-divider {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.intro-tagline {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-md);
+  color: var(--color-gold);
+  font-style: italic;
+}
+
+.intro-year {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* =============================================
+   10. SCENE — STATE SELECT
+   ============================================= */
+
+.state-select {
+  width: 100%;
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  font-family: var(--font-body);
+  /* Custom dropdown arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C8A951' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-md) center;
+  cursor: pointer;
+}
+
+.state-select:focus {
+  outline: none;
+  border-color: var(--color-saffron);
+}
+
+.state-select option {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Live voter count */
+.state-live-count {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  justify-content: center;
+}
+
+/* Blinking red dot — live indicator */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  animation: blink 1s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+
+/* =============================================
+   11. SCENE — MANIFESTO
+   Har party ka satirical manifesto
+   ============================================= */
+
+.manifesto-party-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-blue);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.manifesto-emoji {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.manifesto-party-name {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+  line-height: 1.2;
+}
+
+.manifesto-slogan {
+  font-size: var(--fs-sm);
+  color: var(--color-gold);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+/* Points container — JS se fill hoga */
+.manifesto-points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+/* Single point item — JS se banegi */
+.manifesto-point-item {
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.manifesto-point-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-xs);
+}
+
+.manifesto-point-text {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.manifesto-point-footnote {
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.25);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+
+/* =============================================
+   12. SCENE — EVM MACHINE
+   Exactly real EVM jaisa
+   Sharp corners — no border radius
+   Beige color — real EVM jaisa
+   ============================================= */
+
+.evm-machine {
+  background: var(--color-evm-bg);
+  border-radius: var(--radius-none); /* sharp corners — EVM jaisa */
+  border: 3px solid var(--color-evm-dark);
+  overflow: hidden;
+  box-shadow: 
+    inset 0 2px 4px rgba(255,255,255,0.3),
+    0 4px 20px rgba(0,0,0,0.5);
+}
+
+.evm-header {
+  background: var(--color-evm-dark);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  border-bottom: 2px solid #5a4a2a;
+}
+
+.evm-header-text {
+  font-size: var(--fs-xs);
+  color: var(--color-white);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.evm-header-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+.evm-ballot {
+  padding: var(--space-xs) 0;
+}
+
+/* Single party row in EVM */
+.evm-party-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-evm-dark);
+}
+
+.evm-party-row:last-child {
+  border-bottom: none;
+}
+
+.evm-party-num {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #333;
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.evm-party-emoji {
+  font-size: var(--fs-md);
+  flex-shrink: 0;
+}
+
+.evm-party-name {
+  flex: 1;
+  font-size: var(--fs-sm);
+  color: #222;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+
+/* EVM vote button — blue circle exactly like real */
+.evm-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-evm-btn);
+  color: var(--color-white);
+  font-size: var(--fs-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1a3388;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: transform 0.1s ease;
+}
+
+.evm-btn:active {
+  transform: scale(0.9);
+}
+
+/* Selected state — row highlight */
+.evm-party-row.evm-selected-row {
+  background: rgba(34, 68, 170, 0.15);
+}
+
+/* Selected party display box */
+.evm-selected {
+  background: #f5f0e8;
+  border-top: 2px solid var(--color-evm-dark);
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+}
+
+#evmSelectedText {
+  font-size: var(--fs-sm);
+  color: #333;
+  font-weight: 600;
+}
+
+.evm-disclaimer {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+
+/* =============================================
+   13. SCENE — VOTE CONFIRMED
+   ============================================= */
+
+.confirmed-emoji {
+  font-size: 72px;
+  animation: confirmPop 0.5s ease forwards;
+}
+
+.confirmed-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-xl);
+  color: var(--color-green);
+}
+
+.confirmed-text {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.confirmed-detail {
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  width: 100%;
+}
+
+.confirmed-detail p {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.confirmed-detail p:last-child {
+  border-bottom: none;
+}
+
+
+/* =============================================
+   14. SCENE — BHADAAS FORUM
+   ============================================= */
+
+.bhadaas-input {
+  width: 100%;
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  resize: none;
+  height: 120px;
+}
+
+.bhadaas-input:focus {
+  outline: none;
+  border-color: var(--color-saffron);
+}
+
+.bhadaas-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.bhadaas-meta {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+/* Top bhadaas section */
+.bhadaas-top {
+  margin-top: var(--space-md);
+}
+
+.bhadaas-top-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-md);
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+/* Single bhadaas item — JS se banegi */
+.bhadaas-item {
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.bhadaas-item-text {
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: var(--space-xs);
+}
+
+.bhadaas-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bhadaas-item-from {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+}
+
+.bhadaas-item-likes {
+  font-size: var(--fs-sm);
+  color: var(--color-saffron);
+  font-weight: 600;
+}
+
+/* Like button on bhadaas */
+.bhadaas-like-btn {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: all 0.2s;
+}
+
+.bhadaas-like-btn.liked {
+  color: #ff4444;
+  border-color: #ff4444;
+}
+
+
+/* =============================================
+   15. SCENE — RESULTS
+   ============================================= */
+
+/* Countdown box */
+.countdown-box {
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+#countdownDays {
+  font-family: var(--font-serif);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--color-saffron);
+  display: block;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: var(--fs-base);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+  display: block;
+}
+
+/* Single state count row — JS se banegi */
+.state-count-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-blue);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.state-count-name {
+  font-size: var(--fs-base);
+  color: var(--color-text);
+}
+
+.state-count-votes {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--color-saffron);
+}
+
+
+/* =============================================
+   16. SCENE — CERTIFICATE
+   Shareable voting certificate
+   ============================================= */
+
+.certificate {
+  width: 100%;
+  background: #f5f0e8; /* parchment jaisa color */
+  border: 3px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.certificate-header {
+  background: var(--color-blue);
+  padding: var(--space-md);
+  text-align: center;
+  border-bottom: 2px solid var(--color-gold);
+}
+
+.certificate-flag {
+  font-size: 32px;
+}
+
+.certificate-title {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-lg);
+  color: var(--color-gold);
+  letter-spacing: 3px;
+  margin-top: var(--space-xs);
+}
+
+.certificate-subtitle {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  margin-top: var(--space-xs);
+}
+
+.certificate-body {
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.certificate-text {
+  font-size: var(--fs-sm);
+  color: #555;
+  line-height: 1.8;
+}
+
+.certificate-name {
+  font-family: var(--font-hindi);
+  font-size: var(--fs-lg);
+  color: #222;
+  font-weight: 700;
+  margin: var(--space-xs) 0;
+}
+
+.certificate-party {
+  font-size: var(--fs-md);
+  color: var(--color-saffron);
+  font-weight: 700;
+  margin-top: var(--space-xs);
+}
+
+.certificate-footer {
+  background: #ede8dc;
+  border-top: 1px solid var(--color-gold);
+  padding: var(--space-md);
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: #666;
+  line-height: 1.8;
+}
+
+.certificate-small {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+
+/* =============================================
+   17. BUTTONS
+   Saare buttons ek jagah
+   ============================================= */
+
+/* Primary button — main CTA */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-saffron), var(--color-saffron-lt));
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  font-family: var(--font-body);
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  /* Min tap target for mobile */
+  min-height: 52px;
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
+}
+
+/* Disabled state */
+.btn-primary:disabled {
+  background: linear-gradient(135deg, #555, #444);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Secondary button — less prominent */
+.btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--fs-base);
+  font-family: var(--font-body);
+  transition: border-color 0.2s;
+  min-height: 52px;
+}
+
+.btn-secondary:active {
+  border-color: var(--color-saffron);
+}
+
+/* Ghost button — barely visible */
+.btn-ghost {
+  width: 100%;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  padding: var(--space-sm);
+  font-size: var(--fs-sm);
+  font-family: var(--font-body);
+  text-decoration: underline;
+  min-height: 44px;
+}
+
+
+/* =============================================
+   18. AD SLOT
+   AdSense ke liye placeholder
+   Between scenes dikhega
+   ============================================= */
+
+.ad-slot {
+  position: absolute;
+  bottom: 60px; /* bottombar ke upar */
+  left: var(--space-md);
+  right: var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  text-align: center;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+}
+
+.ad-label {
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, 0.15);
+  letter-spacing: 2px;
+}
+
+
+/* =============================================
+   19. ANIMATIONS
+   Sirf zaroori animations
+   ============================================= */
+
+/* Flag wave — permission screen */
+@keyframes flagWave {
+  0%, 100% { transform: rotate(-5deg); }
+  50%       { transform: rotate(5deg); }
+}
+
+/* Cockroach wiggle — intro screen */
+@keyframes cockroachWiggle {
+  0%, 100% { transform: rotate(-3deg) scale(1); }
+  50%       { transform: rotate(3deg) scale(1.05); }
+}
+
+/* Blinking dot — live indicator */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+/* Confirm pop — vote confirmed */
+@keyframes confirmPop {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Scene fade in — scene switch hone par */
+@keyframes sceneFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.scene--active {
+  animation: sceneFadeIn 0.3s ease forwards;
+}
+
+
+/* =============================================
+   20. UTILITIES
+   Chhote helper classes
+   ============================================= */
+
+/* Hidden — JS se toggle hoga */
+.hidden {
+  display: none !important;
+}
+
+/* Text colors */
+.text-saffron { color: var(--color-saffron); }
+.text-gold    { color: var(--color-gold); }
+.text-muted   { color: var(--color-text-muted); }
+.text-green   { color: var(--color-green); }
+.text-center  { text-align: center; }
+
+/* Spacing */
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
